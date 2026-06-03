@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>LENTERA BAP</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.10.0/tabler-icons.min.css" />
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Segoe UI', sans-serif; background: #f0f6ff; min-height: 100vh; display: flex; justify-content: center; padding: 1rem; }
+.page { width: 100%; max-width: 420px; }
+.header { text-align: center; padding: 1.5rem 0 1rem; }
+.logo-circle { width: 56px; height: 56px; border-radius: 50%; background: #185FA5; display: flex; align-items: center; justify-content: center; margin: 0 auto 12px; }
+.logo-circle i { font-size: 26px; color: #fff; }
+.header h1 { font-size: 22px; font-weight: 600; color: #042C53; }
+.header p { font-size: 13px; color: #378ADD; margin-top: 4px; }
+.card { background: #fff; border: 1px solid #B5D4F4; border-radius: 14px; padding: 1rem 1.25rem; margin-bottom: 1rem; box-shadow: 0 2px 8px rgba(24,95,165,0.06); }
+.label { font-size: 12px; color: #378ADD; margin-bottom: 6px; font-weight: 500; }
+input[type=text], input[type=password] { width: 100%; padding: 10px 12px; border: 1px solid #B5D4F4; border-radius: 8px; font-size: 14px; color: #042C53; outline: none; transition: border 0.2s; }
+input[type=text]:focus, input[type=password]:focus { border-color: #185FA5; }
+.btn-primary { width: 100%; padding: 11px; background: #185FA5; color: #fff; border: none; border-radius: 8px; font-size: 14px; font-weight: 600; cursor: pointer; margin-top: 10px; letter-spacing: 0.3px; transition: background 0.2s; }
+.btn-primary:hover { background: #0C447C; }
+.btn-sm { padding: 6px 12px; font-size: 12px; border-radius: 8px; cursor: pointer; border: 1px solid #B5D4F4; background: #E6F1FB; color: #185FA5; font-weight: 500; }
+.btn-sm:hover { background: #B5D4F4; }
+.btn-danger { background: #FCEBEB; border-color: #F09595; color: #A32D2D; }
+.btn-danger:hover { background: #F7C1C1; }
+.result-card { display: none; background: #E6F1FB; border: 1px solid #85B7EB; border-radius: 14px; padding: 1.25rem; margin-bottom: 1rem; }
+.result-name { font-size: 15px; font-weight: 600; color: #042C53; margin-bottom: 1rem; display: flex; align-items: center; gap: 8px; }
+.steps { display: flex; flex-direction: column; }
+.step { display: flex; align-items: flex-start; gap: 10px; padding: 8px 0; position: relative; }
+.step:not(:last-child)::after { content: ''; position: absolute; left: 13px; top: 32px; bottom: -8px; width: 2px; background: #B5D4F4; }
+.step.done::after { background: #185FA5; }
+.step-dot { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; border: 2px solid #B5D4F4; background: #fff; }
+.step.done .step-dot { background: #185FA5; border-color: #185FA5; }
+.step.active .step-dot { border-color: #185FA5; background: #fff; }
+.step-dot i { font-size: 14px; color: #B5D4F4; }
+.step.done .step-dot i { color: #fff; }
+.step.active .step-dot i { color: #185FA5; }
+.step-label { font-size: 13px; color: #378ADD; padding-top: 5px; }
+.step.done .step-label { color: #042C53; font-weight: 600; }
+.step.active .step-label { color: #185FA5; font-weight: 600; }
+.not-found { display: none; background: #FCEBEB; border: 1px solid #F09595; border-radius: 8px; padding: 12px; text-align: center; font-size: 13px; color: #A32D2D; margin-top: 10px; }
+.admin-toggle { text-align: right; margin-bottom: 8px; }
+.admin-toggle button { font-size: 12px; color: #378ADD; background: none; border: none; cursor: pointer; display: flex; align-items: center; gap: 4px; margin-left: auto; }
+.admin-toggle button:hover { color: #185FA5; }
+.data-list { margin-top: 8px; display: flex; flex-direction: column; gap: 6px; max-height: 220px; overflow-y: auto; }
+.data-item { display: flex; align-items: center; justify-content: space-between; background: #E6F1FB; border-radius: 8px; padding: 8px 10px; font-size: 12px; }
+.data-item-name { font-weight: 600; color: #042C53; }
+.data-item-status { color: #378ADD; font-size: 11px; margin-top: 2px; }
+.badge { font-size: 10px; padding: 2px 8px; border-radius: 20px; background: #185FA5; color: #fff; font-weight: 500; }
+.badge.done { background: #0C447C; }
+select { width: 100%; padding: 9px 10px; font-size: 13px; border: 1px solid #B5D4F4; border-radius: 8px; background: #fff; color: #042C53; margin-top: 4px; outline: none; }
+select:focus { border-color: #185FA5; }
+.form-group { margin-top: 10px; }
+.divider { border: none; border-top: 1px solid #B5D4F4; margin: 12px 0; }
+.panel-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+.panel-title { font-size: 14px; font-weight: 600; color: #042C53; display: flex; align-items: center; gap: 6px; }
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="admin-toggle">
+    <button onclick="toggleAdminLogin()" id="admin-btn"><i class="ti ti-lock"></i> Admin</button>
+  </div>
+
+  <div class="header">
+    <div class="logo-circle"><i class="ti ti-file-search"></i></div>
+    <h1>LENTERA BAP</h1>
+    <p>Cek status pemeriksaan BAP Anda</p>
+  </div>
+
+  <div class="card">
+    <div class="label">Nama pemohon</div>
+    <input type="text" id="search-input" placeholder="Masukkan nama lengkap..." oninput="clearResult()" />
+    <button class="btn-primary" onclick="cekStatus()"><i class="ti ti-search"></i> Cek Status BAP</button>
+    <div class="not-found" id="not-found">Data tidak ditemukan. Hubungi petugas imigrasi.</div>
+  </div>
+
+  <div class="result-card" id="result-card">
+    <div class="result-name" id="result-name"></div>
+    <div class="steps" id="steps-container"></div>
+  </div>
+
+  <div id="admin-login-card" class="card" style="display:none;">
+    <div class="label">Password admin</div>
+    <input type="password" id="admin-pass" placeholder="Masukkan password..." />
+    <button class="btn-primary" onclick="loginAdmin()">Masuk</button>
+    <div id="login-err" style="color:#A32D2D;font-size:12px;margin-top:6px;display:none;">Password salah.</div>
+  </div>
+
+  <div class="card" id="admin-panel" style="display:none;">
+    <div class="panel-header">
+      <div class="panel-title"><i class="ti ti-shield"></i> Panel Admin</div>
+      <button class="btn-sm" onclick="logoutAdmin()">Keluar</button>
+    </div>
+    <div style="font-size:12px;color:#378ADD;margin-bottom:6px;">Tambah / update data pemohon</div>
+    <div class="label">Nama pemohon</div>
+    <input type="text" id="admin-name" placeholder="Nama lengkap pemohon..." />
+    <div class="form-group">
+      <div class="label">Status saat ini</div>
+      <select id="admin-status">
+        <option value="0">Penerimaan Berkas</option>
+        <option value="1">Proses BAP</option>
+        <option value="2">Pendalaman Berkas</option>
+        <option value="3">Telaah Kepala Subseksi</option>
+        <option value="4">Keputusan Kepala Kantor</option>
+        <option value="5">BAP Selesai</option>
+      </select>
+    </div>
+    <button class="btn-primary" onclick="simpanData()">Simpan</button>
+    <div id="save-msg" style="font-size:12px;color:#185FA5;margin-top:6px;display:none;">✓ Data berhasil disimpan.</div>
+    <hr class="divider" />
+    <div style="font-size:12px;color:#378ADD;margin-bottom:6px;">Data tersimpan</div>
+    <div class="data-list" id="data-list"></div>
+  </div>
+</div>
+
+<script>
+const STEPS = ['Penerimaan Berkas','Proses BAP','Pendalaman Berkas','Telaah Kepala Subseksi','Keputusan Kepala Kantor','BAP Selesai'];
+const ICONS = ['ti-file-import','ti-clipboard-text','ti-search','ti-user-check','ti-building-bank','ti-circle-check'];
+const PASS = 'imigrasi2025';
+let data = JSON.parse(localStorage.getItem('lentera_bap') || '{}');
+
+function save() { localStorage.setItem('lentera_bap', JSON.stringify(data)); }
+function normalize(s) { return s.trim().toLowerCase(); }
+
+function cekStatus() {
+  const q = normalize(document.getElementById('search-input').value);
+  const rc = document.getElementById('result-card');
+  const nf = document.getElementById('not-found');
+  rc.style.display = 'none'; nf.style.display = 'none';
+  if (!q) return;
+  const key = Object.keys(data).find(k => normalize(k) === q);
+  if (key === undefined) { nf.style.display = 'block'; return; }
+  const step = data[key];
+  document.getElementById('result-name').innerHTML = '<i class="ti ti-user"></i> ' + key;
+  const sc = document.getElementById('steps-container');
+  sc.innerHTML = '';
+  STEPS.forEach((s, i) => {
+    const cls = i < step ? 'done' : i === step ? 'active' : '';
+    const icon = i < step ? 'ti-check' : ICONS[i];
+    sc.innerHTML += `<div class="step ${cls}"><div class="step-dot"><i class="ti ${icon}"></i></div><div class="step-label">${s}</div></div>`;
+  });
+  rc.style.display = 'block';
+}
+
+function clearResult() {
+  document.getElementById('result-card').style.display = 'none';
+  document.getElementById('not-found').style.display = 'none';
+}
+
+function toggleAdminLogin() {
+  const el = document.getElementById('admin-login-card');
+  el.style.display = el.style.display === 'none' ? 'block' : 'none';
+}
+
+function loginAdmin() {
+  if (document.getElementById('admin-pass').value === PASS) {
+    document.getElementById('admin-login-card').style.display = 'none';
+    document.getElementById('admin-panel').style.display = 'block';
+    document.getElementById('admin-btn').style.display = 'none';
+    renderDataList();
+  } else {
+    document.getElementById('login-err').style.display = 'block';
+  }
+}
+
+function logoutAdmin() {
+  document.getElementById('admin-panel').style.display = 'none';
+  document.getElementById('admin-btn').style.display = 'flex';
+  document.getElementById('admin-pass').value = '';
+}
+
+function simpanData() {
+  const name = document.getElementById('admin-name').value.trim();
+  const status = parseInt(document.getElementById('admin-status').value);
+  if (!name) return;
+  data[name] = status; save();
+  document.getElementById('save-msg').style.display = 'block';
+  setTimeout(() => document.getElementById('save-msg').style.display = 'none', 2000);
+  document.getElementById('admin-name').value = '';
+  renderDataList();
+}
+
+function hapusData(key) { delete data[key]; save(); renderDataList(); }
+
+function renderDataList() {
+  const dl = document.getElementById('data-list');
+  const keys = Object.keys(data);
+  if (!keys.length) { dl.innerHTML = '<div style="font-size:12px;color:#378ADD;text-align:center;padding:8px;">Belum ada data</div>'; return; }
+  dl.innerHTML = keys.map(k => `
+    <div class="data-item">
+      <div>
+        <div class="data-item-name">${k}</div>
+        <div class="data-item-status">${STEPS[data[k]]}</div>
+      </div>
+      <div style="display:flex;gap:6px;align-items:center;">
+        <span class="badge ${data[k]===5?'done':''}">${data[k]===5?'Selesai':'Proses'}</span>
+        <button class="btn-sm btn-danger" onclick="hapusData('${k.replace(/'/g,"\\'")}')"><i class="ti ti-trash"></i></button>
+      </div>
+    </div>
+  `).join('');
+}
+</script>
+</body>
+</html>
