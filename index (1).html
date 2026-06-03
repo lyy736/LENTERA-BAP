@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>LENTERA BAP – Imigrasi Cianjur</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.10.0/tabler-icons.min.css"/>
+<style>
+:root {
+  --blue-50:#E6F1FB;--blue-100:#B5D4F4;--blue-200:#85B7EB;
+  --blue-400:#378ADD;--blue-600:#185FA5;--blue-800:#0C447C;--blue-900:#042C53;
+  --green-50:#EAF3DE;--green-600:#3B6D11;--green-800:#27500A;
+  --red-50:#FCEBEB;--red-600:#A32D2D;
+  --gray-50:#F1EFE8;--gray-200:#B4B2A9;--gray-600:#5F5E5A;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:linear-gradient(160deg,#e8f3fd 0%,#f5f9ff 50%,#eef5ff 100%);min-height:100vh;display:flex;justify-content:center;padding:1.25rem 1rem 3rem;}
+.page{width:100%;max-width:420px;}
+
+/* Header */
+.header{text-align:center;padding:2rem 0 1.25rem;}
+.logo-wrap{position:relative;display:inline-block;margin-bottom:14px;}
+.logo-circle{width:64px;height:64px;border-radius:50%;background:var(--blue-600);display:flex;align-items:center;justify-content:center;box-shadow:0 8px 24px rgba(24,95,165,0.3);}
+.logo-circle i{font-size:30px;color:#fff;}
+.logo-ring{position:absolute;inset:-5px;border-radius:50%;border:2px solid var(--blue-200);opacity:.5;}
+.header h1{font-size:24px;font-weight:700;color:var(--blue-900);letter-spacing:.5px;}
+.header p{font-size:13px;color:var(--blue-400);margin-top:4px;}
+.header-badge{display:inline-flex;align-items:center;gap:5px;background:var(--blue-50);border:1px solid var(--blue-100);border-radius:20px;padding:4px 12px;font-size:11px;color:var(--blue-600);font-weight:500;margin-top:10px;}
+
+/* Card */
+.card{background:#fff;border:1px solid var(--blue-100);border-radius:16px;padding:1.25rem;margin-bottom:1rem;box-shadow:0 2px 16px rgba(24,95,165,0.07);}
+
+/* Form */
+.label{font-size:11px;color:var(--blue-400);margin-bottom:6px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;}
+.input-wrap{position:relative;}
+.input-wrap i{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--blue-200);font-size:16px;}
+input[type=text],input[type=password]{width:100%;padding:11px 12px 11px 36px;border:1.5px solid var(--blue-100);border-radius:10px;font-size:14px;color:var(--blue-900);outline:none;transition:border .2s,box-shadow .2s;font-family:inherit;}
+input[type=text]:focus,input[type=password]:focus{border-color:var(--blue-600);box-shadow:0 0 0 3px rgba(24,95,165,0.1);}
+input[type=password]{padding-left:12px;}
+
+.btn{width:100%;padding:12px;background:var(--blue-600);color:#fff;border:none;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;margin-top:10px;display:flex;align-items:center;justify-content:center;gap:7px;transition:background .2s,transform .1s;font-family:inherit;}
+.btn:hover{background:var(--blue-800);}
+.btn:active{transform:scale(.98);}
+.btn:disabled{background:var(--blue-200);cursor:not-allowed;}
+
+/* Not found */
+.not-found{display:none;background:var(--red-50);border:1px solid #F7C1C1;border-radius:10px;padding:12px;text-align:center;font-size:13px;color:var(--red-600);margin-top:10px;display:none;}
+
+/* Result */
+.result-card{display:none;background:linear-gradient(135deg,#EBF4FF 0%,#E6F1FB 100%);border:1px solid var(--blue-100);border-radius:16px;padding:1.25rem;margin-bottom:1rem;}
+.result-header{display:flex;align-items:center;gap:10px;margin-bottom:16px;padding-bottom:14px;border-bottom:1px solid var(--blue-100);}
+.result-avatar{width:40px;height:40px;border-radius:50%;background:var(--blue-600);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.result-avatar i{font-size:20px;color:#fff;}
+.result-name{font-size:15px;font-weight:700;color:var(--blue-900);}
+.result-sub{font-size:11px;color:var(--blue-400);margin-top:2px;}
+
+/* Steps */
+.steps{display:flex;flex-direction:column;gap:0;}
+.step{display:flex;align-items:flex-start;gap:10px;padding:7px 0;position:relative;}
+.step:not(:last-child)::after{content:'';position:absolute;left:15px;top:34px;bottom:-7px;width:2px;background:var(--blue-100);}
+.step.done::after{background:var(--blue-600);}
+.step.active::after{background:linear-gradient(to bottom,var(--blue-600),var(--blue-100));}
+.step-dot{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;border:2px solid var(--blue-100);background:#fff;transition:all .3s;}
+.step.done .step-dot{background:var(--blue-600);border-color:var(--blue-600);}
+.step.active .step-dot{border-color:var(--blue-600);background:#fff;box-shadow:0 0 0 4px rgba(24,95,165,0.12);}
+.step-dot i{font-size:14px;color:var(--blue-200);}
+.step.done .step-dot i{color:#fff;}
+.step.active .step-dot i{color:var(--blue-600);}
+.step-info{flex:1;padding-top:5px;}
+.step-label{font-size:13px;color:var(--gray-200);font-weight:500;}
+.step.done .step-label{color:var(--blue-900);font-weight:600;}
+.step.active .step-label{color:var(--blue-600);font-weight:700;}
+.step-date{font-size:11px;color:var(--blue-200);margin-top:2px;}
+.step.done .step-date,.step.active .step-date{color:var(--blue-400);}
+
+/* Progress bar */
+.progress-wrap{margin-bottom:14px;}
+.progress-label{display:flex;justify-content:space-between;font-size:11px;color:var(--blue-400);margin-bottom:5px;}
+.progress-bar{height:5px;background:var(--blue-100);border-radius:99px;overflow:hidden;}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--blue-600),var(--blue-400));border-radius:99px;transition:width .6s ease;}
+
+/* Spinner */
+.spinner{width:16px;height:16px;border:2px solid rgba(255,255,255,.4);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite;display:inline-block;}
+@keyframes spin{to{transform:rotate(360deg)}}
+.spinner-blue{border-color:var(--blue-100);border-top-color:var(--blue-600);}
+
+/* Admin toggle */
+.admin-toggle{text-align:right;margin-bottom:6px;}
+.admin-toggle button{font-size:12px;color:var(--blue-400);background:none;border:none;cursor:pointer;display:inline-flex;align-items:center;gap:4px;font-family:inherit;}
+.admin-toggle button:hover{color:var(--blue-600);}
+
+/* Footer */
+.footer{text-align:center;font-size:11px;color:var(--gray-200);padding-top:.5rem;}
+.footer strong{color:var(--gray-600);}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="admin-toggle">
+    <button onclick="location.href='admin.html'"><i class="ti ti-shield-lock"></i> Admin</button>
+  </div>
+
+  <div class="header">
+    <div class="logo-wrap">
+      <div class="logo-circle"><i class="ti ti-file-search"></i></div>
+      <div class="logo-ring"></div>
+    </div>
+    <h1>LENTERA BAP</h1>
+    <p>Lacak Status Pemeriksaan Berkas Anda</p>
+    <div class="header-badge"><i class="ti ti-map-pin" style="font-size:12px"></i> Imigrasi Cianjur</div>
+  </div>
+
+  <div class="card">
+    <div class="label">Nama Pemohon</div>
+    <div class="input-wrap">
+      <i class="ti ti-user"></i>
+      <input type="text" id="search-input" placeholder="Masukkan nama lengkap..." oninput="clearResult()" onkeydown="if(event.key==='Enter')cekStatus()"/>
+    </div>
+    <button class="btn" id="btn-cek" onclick="cekStatus()">
+      <i class="ti ti-search"></i> Cek Status BAP
+    </button>
+    <div class="not-found" id="not-found">
+      <i class="ti ti-alert-circle" style="font-size:16px;vertical-align:-3px;margin-right:4px"></i>
+      Data tidak ditemukan. Hubungi petugas imigrasi.
+    </div>
+  </div>
+
+  <div class="result-card" id="result-card">
+    <div class="result-header">
+      <div class="result-avatar"><i class="ti ti-user"></i></div>
+      <div>
+        <div class="result-name" id="result-name"></div>
+        <div class="result-sub">Status pemeriksaan BAP</div>
+      </div>
+    </div>
+    <div class="progress-wrap">
+      <div class="progress-label">
+        <span>Progres</span>
+        <span id="progress-pct">0%</span>
+      </div>
+      <div class="progress-bar"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
+    </div>
+    <div class="steps" id="steps-container"></div>
+  </div>
+
+  <div class="footer">Kantor Imigrasi Kelas III Non TPI <strong>Cianjur</strong></div>
+</div>
+
+<script>
+const SB_URL = 'https://almupucjpbiriukcycev.supabase.co';
+const SB_KEY = 'sb_publishable_A9weCii1Sipg8CEqrXHqWA_0w69ooDY';
+const STEPS = ['Penerimaan Berkas','Proses BAP','Pendalaman Berkas','Telaah Kepala Subseksi','Keputusan Kepala Kantor','BAP Selesai'];
+const ICONS = ['ti-file-import','ti-clipboard-text','ti-zoom-in','ti-user-check','ti-building-bank','ti-circle-check'];
+
+function normalize(s){return s.trim().toLowerCase();}
+
+async function cekStatus(){
+  const q = document.getElementById('search-input').value.trim();
+  const rc = document.getElementById('result-card');
+  const nf = document.getElementById('not-found');
+  const btn = document.getElementById('btn-cek');
+  rc.style.display='none'; nf.style.display='none';
+  if(!q) return;
+
+  btn.disabled=true;
+  btn.innerHTML='<span class="spinner"></span> Mencari...';
+
+  try {
+    const res = await fetch(`${SB_URL}/rest/v1/pemohon?select=*&nama=ilike.${encodeURIComponent(q)}`, {
+      headers:{'apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY}
+    });
+    const data = await res.json();
+    if(!data.length){nf.style.display='block';}
+    else{tampilkanHasil(data[0]);}
+  } catch(e){
+    nf.style.display='block';
+    document.getElementById('not-found').textContent='Gagal terhubung ke server. Coba lagi.';
+  }
+
+  btn.disabled=false;
+  btn.innerHTML='<i class="ti ti-search"></i> Cek Status BAP';
+}
+
+function tampilkanHasil(d){
+  const rc = document.getElementById('result-card');
+  document.getElementById('result-name').textContent = d.nama;
+  const step = d.step;
+  const dates = d.tanggal_update || {};
+  const pct = Math.round((step / (STEPS.length-1)) * 100);
+  document.getElementById('progress-fill').style.width = pct+'%';
+  document.getElementById('progress-pct').textContent = pct+'%';
+
+  const sc = document.getElementById('steps-container');
+  sc.innerHTML = '';
+  STEPS.forEach((s,i)=>{
+    const cls = i < step ? 'done' : i===step ? 'active' : '';
+    const icon = i < step ? 'ti-check' : ICONS[i];
+    const dateStr = dates[i] ? `<div class="step-date"><i class="ti ti-calendar" style="font-size:10px;vertical-align:-1px"></i> ${dates[i]}</div>` : '';
+    sc.innerHTML += `<div class="step ${cls}">
+      <div class="step-dot"><i class="ti ${icon}"></i></div>
+      <div class="step-info"><div class="step-label">${s}</div>${dateStr}</div>
+    </div>`;
+  });
+  rc.style.display='block';
+}
+
+function clearResult(){
+  document.getElementById('result-card').style.display='none';
+  document.getElementById('not-found').style.display='none';
+}
+
+// Auto-cek dari QR (?nama=...)
+(function(){
+  const p = new URLSearchParams(window.location.search);
+  const nama = p.get('nama');
+  if(nama){document.getElementById('search-input').value=nama; cekStatus();}
+})();
+</script>
+</body>
+</html>
